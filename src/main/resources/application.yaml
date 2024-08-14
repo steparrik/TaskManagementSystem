@@ -1,0 +1,17 @@
+server:
+  port: ${SERVER_PORT}
+jwt:
+  secret: ${JWT_SECRET}
+  lifetime: ${JWT_LIFE}
+spring:
+  application:
+    name: TaskManagementSystem
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: ${DB_USERNAME}
+    url: ${DB_URL}
+    password: ${DB_PASSWORD}
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
