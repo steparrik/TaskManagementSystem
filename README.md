@@ -3,7 +3,7 @@
 ## Настройка и запуск
 
 1. **Клонируйте репозиторий:**
-   git clone https://github.com/steparrik/TaskManagementSystem.git
+ - *git clone https://github.com/steparrik/TaskManagementSystem.git*
    
 2.  **Настройте переменные окружения:**
    Создайте файл .env в корневой директории проекта со следующим содержимым:
