@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:13
+    container_name: postgres
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "${SERVER_PORT}:${SERVER_PORT}"
+    environment:
+      spring.datasource.url: ${DB_URl}
+      spring.datasource.username: ${DB_USERNAME}
+      spring.datasource.password: ${DB_PASSWORD}
+      server.port: ${SERVER_PORT}
+      jwt.secret: ${JWT_SECRET}
+      JWT_LIFE: ${JWT_LIFE}
+    depends_on:
+      - postgres
+
+
+volumes:
+  pgdata:
+
