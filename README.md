@@ -13,7 +13,7 @@
 - DB_URL=jdbc:postgresql://postgres:5432/your_database_name 
 - SERVER_PORT=8080
 - JWT_SECRET=your_jwt_secret
-- JWT_LIFE=3600
+- JWT_LIFE=200h
 
 3. **Соберите проект:**
 - mvn clean package
