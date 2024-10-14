@@ -46,9 +46,9 @@ public class TaskService {
     }
 
 
-    public Set<Task> getTasksList(String email, boolean executeTasks) {
+    public List<Task> getTasksList(String email, boolean executeTasks) {
         User user = userService.findByEmail(email);
-        Set<Task> taskList = new HashSet<>();
+        List<Task> taskList = new ArrayList<>();
         if (!executeTasks) {
             taskList = user.getOwnTasks();
         } else {
