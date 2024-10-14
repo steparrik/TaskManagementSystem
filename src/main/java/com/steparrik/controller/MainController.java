@@ -5,15 +5,19 @@ import com.steparrik.dto.task.TaskCreateDto;
 import com.steparrik.dto.task.TaskEditDto;
 import com.steparrik.dto.user.UserAuthDto;
 import com.steparrik.dto.user.UserRegistrationDto;
+import com.steparrik.entity.User;
 import com.steparrik.service.comment.CommentService;
 import com.steparrik.service.task.TaskService;
 import com.steparrik.service.user.UserAuthService;
 import com.steparrik.service.user.UserRegistrationService;
+import com.steparrik.service.user.UserService;
 import com.steparrik.utils.mapper.comment.CommentResponseMapper;
 import com.steparrik.utils.mapper.task.TaskResponseMapper;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springdoc.core.annotations.RouterOperation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,9 +35,11 @@ public class MainController {
     private final CommentService commentService;
     private final TaskResponseMapper taskResponseMapper;
     private final CommentResponseMapper commentResponseMapper;
+    private final UserService userService;
 
 
     @PostMapping("/auth")
+    @Operation(summary = "Выдает токен")
     public ResponseEntity<?> authentication(@Valid @RequestBody UserAuthDto authRequest) {
         return ResponseEntity.ok().body(userAuthService.createAuthToken(authRequest));
     }
@@ -90,6 +96,12 @@ public class MainController {
         String email = principal.getName();
         commentService.deleteComment(email, commentId);
         return ResponseEntity.ok().body(null);
+    }
+
+    @GetMapping("/tasksCount")
+    public ResponseEntity<?> getTasks(Principal principal) {
+        User user = userService.findByEmail(principal.getName());
+        return ResponseEntity.ok().body(taskService.countCommentsWithCurrentUser(user.getId()));
     }
 
 }

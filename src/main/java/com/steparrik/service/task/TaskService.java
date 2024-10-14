@@ -14,7 +14,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 @Service
@@ -44,9 +46,9 @@ public class TaskService {
     }
 
 
-    public List<Task> getTasksList(String email, boolean executeTasks) {
+    public Set<Task> getTasksList(String email, boolean executeTasks) {
         User user = userService.findByEmail(email);
-        List<Task> taskList = new ArrayList<>();
+        Set<Task> taskList = new HashSet<>();
         if (!executeTasks) {
             taskList = user.getOwnTasks();
         } else {
@@ -108,5 +110,9 @@ public class TaskService {
         return task;
     }
 
+
+    public int countCommentsWithCurrentUser(Long userId){
+         return taskRepository.countTasksByUserId(userId);
+    }
 
 }
