@@ -19,7 +19,7 @@ public class SwaggerConfig {
         return new OpenAPI()
                 .servers(
                         List.of(
-                                new Server().url("http://localhost:8080")
+                                new Server().url("http://176.109.105.66:8080")
                         )
                 )
                 .info(new Info().title("Task Management System API"))
