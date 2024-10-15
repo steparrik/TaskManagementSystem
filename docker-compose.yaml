@@ -20,7 +20,7 @@ services:
     ports:
       - "${SERVER_PORT}:${SERVER_PORT}"
     environment:
-      spring.datasource.url: ${DB_URl}
+      spring.datasource.url: ${DB_URL}
       spring.datasource.username: ${DB_USERNAME}
       spring.datasource.password: ${DB_PASSWORD}
       server.port: ${SERVER_PORT}
