@@ -14,9 +14,7 @@ services:
       - pgdata:/var/lib/postgresql/data
 
   app:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: task-app:latest
     ports:
       - "${SERVER_PORT}:${SERVER_PORT}"
     environment:
