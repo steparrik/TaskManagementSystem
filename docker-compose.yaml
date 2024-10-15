@@ -14,7 +14,7 @@ services:
       - pgdata:/var/lib/postgresql/data
 
   app:
-    image: task-app:latest
+    image: task-app-image:latest
     ports:
       - "${SERVER_PORT}:${SERVER_PORT}"
     environment:
