@@ -35,6 +35,7 @@ jobs:
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
           SERVER_PORT: ${{ secrets.SERVER_PORT }}
           DB_NAME: ${{ secrets.DB_NAME }}
+          SWAGGER_URL: ${{ secrets.SWAGGER_URL}}
         run: mvn test
 
   deploy:
