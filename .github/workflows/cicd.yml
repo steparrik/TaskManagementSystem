@@ -3,8 +3,6 @@ name: Task Management System CI_CD
 on:
   pull_request:
     branches: [master]
-  push:
-    branches: [master]
   workflow_dispatch:
 
 jobs:

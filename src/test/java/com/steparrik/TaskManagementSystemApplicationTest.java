@@ -53,7 +53,7 @@ public class TaskManagementSystemApplicationTest {
         userService.save(user);
 
         User foundUser = userService.findByEmail("test@example.com");
-        assertEquals("test@example.com", foundUser.getEmail());
+        assertEquals("test@example.co", foundUser.getEmail());
     }
 
     @Test
