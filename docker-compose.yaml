@@ -24,6 +24,7 @@ services:
       server.port: ${SERVER_PORT}
       jwt.secret: ${JWT_SECRET}
       JWT_LIFE: ${JWT_LIFE}
+      SWAGGER_URL: ${SWAGGER_URL}
     depends_on:
       - postgres_2
 
