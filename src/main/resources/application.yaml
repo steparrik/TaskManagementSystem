@@ -15,3 +15,5 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
+swagger:
+  url: ${SWAGGER_URL}
