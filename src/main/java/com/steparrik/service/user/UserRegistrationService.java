@@ -16,12 +16,11 @@ public class UserRegistrationService {
     private final UserRegistrationMapper userRegistrationMapper;
     private final RegistrationDateValidate registrationDateValidate;
 
-    public ResponseEntity<?> registration(UserRegistrationDto userRegistrationDto) {
+    public void registration(UserRegistrationDto userRegistrationDto) {
         registrationDateValidate.validateRegistrationDate(userRegistrationDto);
         User user = userRegistrationMapper.toEntity(userRegistrationDto);
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         user.setPassword(bCryptPasswordEncoder.encode(userRegistrationDto.getPassword()));
         userService.save(user);
-        return ResponseEntity.ok().body(null);
     }
 }
