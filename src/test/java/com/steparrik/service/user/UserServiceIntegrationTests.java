@@ -1,18 +1,22 @@
-package com.steparrik.service;
+package com.steparrik.service.user;
 
+import com.steparrik.dto.user.UserRegistrationDto;
 import com.steparrik.entity.User;
 import com.steparrik.repository.UserRepository;
-import com.steparrik.service.user.UserService;
 import com.steparrik.utils.exception.ApiException;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
+import com.steparrik.utils.mapper.user.UserRegistrationMapper;
+import com.steparrik.utils.validate.RegistrationDateValidate;
+import lombok.RequiredArgsConstructor;
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.shaded.org.checkerframework.checker.units.qual.A;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -24,7 +28,9 @@ public class UserServiceIntegrationTests {
     @Autowired
     private UserService userService;
     @Autowired
-    private UserRepository userRepository;
+    private  UserRepository userRepository;
+    @Autowired
+    private RegistrationDateValidate registrationDateValidate;
 
     static PostgreSQLContainer<?> postgresContainer = new PostgreSQLContainer<>("postgres:latest")
             .withDatabaseName("test_db")
@@ -42,23 +48,50 @@ public class UserServiceIntegrationTests {
     @BeforeEach
     void setUp() {
         userRepository.deleteAll();
-    }
-
-    @Test
-    void testFindByEmail_UserExists() {
         User user = new User();
         user.setEmail("test@example.com");
         user.setPassword("test");
         userService.save(user);
+    }
 
+    @Test
+    void testFindByEmailUserExists() {
         User foundUser = userService.findByEmail("test@example.com");
         assertEquals("test@example.com", foundUser.getEmail());
     }
 
     @Test
-    void testFindByEmail_UserDoesNotExist() {
+    void testFindByEmailUserDoesNotExist() {
         assertThrows(ApiException.class, () -> {
-            userService.findByEmail("test@example.com");
+            userService.findByEmail("test1@example.com");
         });
+    }
+
+    @Test
+    void testRegistrationValidateDifferentPasswords() {
+        UserRegistrationDto userRegistrationDto = new UserRegistrationDto();
+        userRegistrationDto.setEmail("test@example.com");
+        userRegistrationDto.setPassword("test");
+        userRegistrationDto.setConfirmPassword("test1");
+
+        ApiException exception = assertThrows(ApiException.class, () -> {
+            registrationDateValidate.validateRegistrationDate(userRegistrationDto);
+        });
+
+        assertEquals("Passwords don't match", exception.getMessage());
+    }
+
+    @Test
+    void testRegistrationValidateAlreadyUseEmail() {
+        UserRegistrationDto userRegistrationDto = new UserRegistrationDto();
+        userRegistrationDto.setEmail("test@example.com");
+        userRegistrationDto.setPassword("test");
+        userRegistrationDto.setConfirmPassword("test");
+
+        ApiException exception = assertThrows(ApiException.class, () -> {
+            registrationDateValidate.validateRegistrationDate(userRegistrationDto);
+        });
+
+        assertEquals("User with this email is already registered", exception.getMessage());
     }
 }

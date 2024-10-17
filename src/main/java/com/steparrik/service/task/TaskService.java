@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -46,7 +47,11 @@ public class TaskService {
     }
 
 
-    public List<Task> getTasksList(String email, boolean executeTasks) {
+    public List<Task> getTasksList(Principal principal, String email, boolean executeTasks) {
+        if (email == null || email.isEmpty()) {
+            email = principal.getName();
+        }
+
         User user = userService.findByEmail(email);
         List<Task> taskList = new ArrayList<>();
         if (!executeTasks) {

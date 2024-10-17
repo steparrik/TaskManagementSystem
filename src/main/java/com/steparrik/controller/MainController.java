@@ -56,11 +56,7 @@ public class MainController {
     public List<TaskResponseDto> getTasks(Principal principal,
                                           @RequestParam(required = false) String email,
                                           @RequestParam(required = false) boolean executeTasks) {
-        if (email == null || email.isEmpty()) {
-            email = principal.getName();
-        }
-
-        return taskService.getTasksList(email, executeTasks).stream().map(taskResponseMapper::toDto).collect(Collectors.toList());
+        return taskService.getTasksList(principal, email, executeTasks).stream().map(taskResponseMapper::toDto).collect(Collectors.toList());
     }
 
     @GetMapping("/tasks/{taskId}")

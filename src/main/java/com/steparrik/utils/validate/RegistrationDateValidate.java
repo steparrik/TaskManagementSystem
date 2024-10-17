@@ -3,6 +3,7 @@ package com.steparrik.utils.validate;
 import com.steparrik.dto.user.UserRegistrationDto;
 import com.steparrik.service.user.UserService;
 import com.steparrik.utils.exception.ApiException;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
