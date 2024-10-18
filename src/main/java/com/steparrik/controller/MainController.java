@@ -101,8 +101,4 @@ public class MainController {
         return taskService.countCommentsWithCurrentUser(user.getId());
     }
 
-    @GetMapping("/hello")
-    public String getHello() {
-        return "webfuwbc";
-    }
 }
