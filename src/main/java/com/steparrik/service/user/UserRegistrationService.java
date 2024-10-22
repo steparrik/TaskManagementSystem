@@ -5,7 +5,6 @@ import com.steparrik.entity.User;
 import com.steparrik.utils.mapper.user.UserRegistrationMapper;
 import com.steparrik.utils.validate.RegistrationDateValidate;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 

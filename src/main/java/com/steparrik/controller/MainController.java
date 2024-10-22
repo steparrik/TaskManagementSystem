@@ -19,7 +19,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springdoc.core.annotations.RouterOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,6 +30,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/app")
 @RequiredArgsConstructor
+@Slf4j
 @Tag(name = "Task Management System Main Controller")
 public class MainController {
     private final UserAuthService userAuthService;
@@ -50,6 +51,7 @@ public class MainController {
     @PostMapping("/registration")
     public void registration(@Valid @RequestBody UserRegistrationDto userRegistrationDto) {
         userRegistrationService.registration(userRegistrationDto);
+        log.info("Зарегистрирован пользователь " + userRegistrationDto.getEmail());
     }
 
     @GetMapping("/tasks")
