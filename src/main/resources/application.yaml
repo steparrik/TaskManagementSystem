@@ -4,6 +4,19 @@ jwt:
   secret: ${JWT_SECRET}
   lifetime: ${JWT_LIFE}
 spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${CLIENT_ID}
+            client-secret: ${CLIENT_SECRET}
+            redirect-uri: "${REDIRECT_URI}"
+            scope: email, profile
+        provider:
+          google:
+            authorization-uri: https://accounts.google.com/o/oauth2/v2/auth
+            token-uri: https://oauth2.googleapis.com/token
   application:
     name: TaskManagementSystem
   datasource:
@@ -11,9 +24,17 @@ spring:
     username: ${DB_USERNAME}
     url: ${DB_URL}
     password: ${DB_PASSWORD}
+  liquibase:
+    enabled: true
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
 swagger:
   url: ${SWAGGER_URL}
+logging:
+  level:
+    org.springframework.security.oauth2: DEBUG
+redirect:
+  after:
+    check: ${REDIRECT_AFTER_CHECK}

@@ -25,6 +25,10 @@ services:
       jwt.secret: ${JWT_SECRET}
       JWT_LIFE: ${JWT_LIFE}
       SWAGGER_URL: ${SWAGGER_URL}
+      CLIENT_SECRET: ${CLIENT_SECRET}
+      CLIENT_ID: ${CLIENT_ID}
+      REDIRECT_URI: ${REDIRECT_URI}
+      REDIRECT_AFTER_CHECK: ${REDIRECT_AFTER_CHECK}
     depends_on:
       - postgres_2
 

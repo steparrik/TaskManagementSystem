@@ -20,11 +20,11 @@ public class JwtTokenUtil {
     private Duration jwtLifetime;
 
 
-    public String generateToken(UserDetails userDetails) {
+    public String generateToken(String email) {
         Date issuedDate = new Date();
         Date expiredDate = new Date(issuedDate.getTime() + jwtLifetime.toMillis());
         return Jwts.builder()
-                .setSubject(userDetails.getUsername())
+                .setSubject(email)
                 .setIssuedAt(issuedDate)
                 .setExpiration(expiredDate)
                 .signWith(SignatureAlgorithm.HS256, secret)

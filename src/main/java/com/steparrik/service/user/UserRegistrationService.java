@@ -2,6 +2,7 @@ package com.steparrik.service.user;
 
 import com.steparrik.dto.user.UserRegistrationDto;
 import com.steparrik.entity.User;
+import com.steparrik.entity.enums.RegisterType;
 import com.steparrik.utils.mapper.user.UserRegistrationMapper;
 import com.steparrik.utils.validate.RegistrationDateValidate;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,7 @@ public class UserRegistrationService {
         User user = userRegistrationMapper.toEntity(userRegistrationDto);
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         user.setPassword(bCryptPasswordEncoder.encode(userRegistrationDto.getPassword()));
+        user.setRegisterType(RegisterType.LOCAL);
         userService.save(user);
     }
 }

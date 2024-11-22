@@ -1,5 +1,7 @@
 package com.steparrik.entity;
 
+import com.steparrik.entity.enums.RegisterType;
+import com.steparrik.entity.enums.Status;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,7 +27,6 @@ public class User {
     @Column(unique = true, nullable = false)
     private String email;
 
-    @Column(nullable = false)
     private String password;
 
     @OneToMany(mappedBy = "owner")
@@ -36,4 +37,8 @@ public class User {
 
     @OneToMany(mappedBy = "sender")
     private List<Comment> comments;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private RegisterType registerType;
 }
